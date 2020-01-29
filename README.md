@@ -1,5 +1,3 @@
-# DALPONTE Simon
-
 # CV en ligne en anglais
 
 
@@ -21,3 +19,5 @@ Mon site web en anglais version 1
 
 Pour ce site web j'ai utiliser le template gratuit :
 https://colorlib.com/wp/template/vcard2/
+
+@Copyright DALPONTE Simon
