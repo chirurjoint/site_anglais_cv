@@ -11,6 +11,10 @@
 <link rel="stylesheet" type="text/css" href="plugins/mCustomScrollbar/jquery.mCustomScrollbar.css">
 <link rel="stylesheet" type="text/css" href="styles/portfolio.css">
 <link rel="stylesheet" type="text/css" href="styles/portfolio_responsive.css">
+<!-- Material Design Bootstrap -->
+<link rel="stylesheet" href="./plugins/MDB-Free_4.13.0/css/mdb.min.css">
+<!-- Your custom styles (optional) -->
+<link rel="stylesheet" href="./plugins/MDB-Free_4.13.0/css/style.css">
 </head>
 <body>
 
@@ -109,7 +113,6 @@
 
 			<div class="main_content">
 				<div class="main_title_container d-flex flex-column align-items-start justify-content-end">
-					<div class="main_subtitle">What I am good at</div>
 					<div class="main_title">My Portfolio</div>
 				</div>
 
@@ -117,9 +120,8 @@
 				<div class="portfolio_categories button-group filters-button-group">
 					<ul>
 						<li class="portfolio_category active is-checked" data-filter="*">All</li>
-						<li class="portfolio_category" data-filter=".p_design">Design</li>
-						<li class="portfolio_category" data-filter=".p_photography">Photography</li>
-						<li class="portfolio_category" data-filter=".p_brand">Brand Identity</li>
+						<li class="portfolio_category" data-filter=".p_design">Web development</li>
+						<li class="portfolio_category" data-filter=".p_photography">Drawing</li>
 					</ul>
 				</div>
 
@@ -127,58 +129,189 @@
 					<div class="portfolio_grid grid clearfix">
 
 						<!-- Portfolio Item -->
-						<div class="grid-item portfolio_item p_design">
+						<div class="grid-item portfolio_item p_design" data-toggle="modal" data-target="#modalCookie1">
 							<img src="images/portfolio_1.jpg" alt="">
 							<div class="portfolio_item_content d-flex flex-column align-items-center justify-content-center">
-								<div class="portfolio_item_title">Design</div>
-								<div class="portfolio_item_link"><a href="#">See More</a></div>
+								<div class="portfolio_item_title">Smash 2.0</div>
+							</div>
+						</div>
+						<div class="modal fade top" id="modalCookie1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true" data-backdrop="true">
+							<div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+								<!--Content-->
+								<div class="modal-content">
+									<!--Body-->
+									<div class="modal-body">
+										<div class="row d-flex justify-content-center align-items-center">
+											<h3> Smash 2.0</h3>
+											<p class="pt-3 pr-2">
+												This project was carried out in a team of 4 and consists of the realization
+												of from a fighting game site. It is possible as a user to do
+												fighting in 1v1 as well as 3v3. On the administrator side, there is a
+												management of the different heroes, of the users who are registered there.
+												In addition, users as well as administrators can see the summary of the
+												fighting.
+											</p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
 						<!-- Portfolio Item -->
-						<div class="grid-item portfolio_item p_photography">
+						<div class="grid-item portfolio_item p_photography"  data-toggle="modal" data-target="#modalCookie">
 							<img src="images/portfolio_2.jpg" alt="">
 							<div class="portfolio_item_content d-flex flex-column align-items-center justify-content-center">
-								<div class="portfolio_item_title">Photography</div>
+								<div class="portfolio_item_title">Minimalist drawing</div>
 								<div class="portfolio_item_link"><a href="#">See More</a></div>
 							</div>
 						</div>
-
-						<!-- Portfolio Item -->
-						<div class="grid-item portfolio_item p_brand">
-							<img src="images/portfolio_3.jpg" alt="">
-							<div class="portfolio_item_content d-flex flex-column align-items-center justify-content-center">
-								<div class="portfolio_item_title">Brand Identity</div>
-								<div class="portfolio_item_link"><a href="#">See More</a></div>
+						<div class="modal fade top" id="modalCookie" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true" data-backdrop="true">
+							<div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+								<!--Content-->
+								<div class="modal-content">
+									<!--Body-->
+									<div class="modal-body">
+										<div class="row d-flex justify-content-center align-items-center">
+											<h3> Minimalist drawing</h3>
+											<p class="pt-3 pr-2">
+												What is minimalist drawing ?
+												Minimalist drawing is a method that allows a few simple pencil strokes to reveal a face, hands ...
+												I've been practicing this kind of drawing for about 4 to 5 months.
+												For a drawing I spend on average 4 to 5 hours, I am really demanding to myself and I want it to be perfect before doing the lines with the marker.
+												You might think it's easy, but when you're not used to drawing, it becomes a complex task, especially when you have to draw with your hands what is really one of the most difficult parts of the human body to draw.
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
+
 						<!-- Portfolio Item -->
-						<div class="grid-item portfolio_item p_design">
+						<div class="grid-item portfolio_item p_design" data-toggle="modal" data-target="#modalCookie2">
 							<img src="images/portfolio_4.jpg" alt="">
 							<div class="portfolio_item_content d-flex flex-column align-items-center justify-content-center">
-								<div class="portfolio_item_title">Design</div>
-								<div class="portfolio_item_link"><a href="#">See More</a></div>
+								<div class="portfolio_item_title">Medianet</div>
+							</div>
+						</div>
+						<div class="modal fade top" id="modalCookie2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true" data-backdrop="true">
+							<div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+								<!--Content-->
+								<div class="modal-content">
+									<!--Body-->
+									<div class="modal-body">
+										<div class="row d-flex justify-content-center align-items-center">
+											<h3> Medianet</h3>
+											<p class="pt-3 pr-2">
+												These applications were realized with the collaboration of 3 people.
+												They consist in the management of a media library.
+												On the side of the users' application, one can make loans as well as reserve one or more media.
+												From the administrator side, you can add, delete and modify media.
+												You can also return books thanks to their ID.
+												For this application we have created our own CSS Framework respecting the W3C standards.
+											</p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
 						<!-- Portfolio Item -->
-						<div class="grid-item portfolio_item p_photography">
+						<div class="grid-item portfolio_item p_photography" data-toggle="modal" data-target="#modalCookie3">
 							<img src="images/portfolio_5.jpg" alt="">
 							<div class="portfolio_item_content d-flex flex-column align-items-center justify-content-center">
-								<div class="portfolio_item_title">Photography</div>
-								<div class="portfolio_item_link"><a href="#">See More</a></div>
+								<div class="portfolio_item_title">Roronoa Zoro</div>
+							</div>
+						</div>
+						<div class="modal fade top" id="modalCookie3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true" data-backdrop="true">
+							<div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+								<!--Content-->
+								<div class="modal-content">
+									<!--Body-->
+									<div class="modal-body">
+										<div class="row d-flex justify-content-center align-items-center">
+											<h3> Roronoa Zoro</h3>
+											<p class="pt-3 pr-2">
+												This is a drawing of Roronoa Zoro, a character of the famous manga One Piece.
+												<br>Who is Roronoa Zoro ?<br>
+											Roronoa Zoro the Pirates Hunter is a pirate, an ex-pirates hunter and one of
+											the protagonists of One Piece.
+											He was the first member to join the Straw Hat Crew, he is the first and main
+											swordsman.
+											His ambition is to become the best swordsman in the world,
+											and he has shown an iron will to achieve it.
+											He is a master swordsman who can use several styles of combat,
+											whose particularity lies in the number of swords.
+											His combat abilities are such that he sometimes gives the impression to people outside the crew that he is the real Captain.
+											</p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
 						<!-- Portfolio Item -->
-						<div class="grid-item portfolio_item p_brand">
-							<img src="images/portfolio_6.jpg" alt="">
+						<div class="grid-item portfolio_item p_photography" data-toggle="modal" data-target="#modalCookie4">
+							<img src="images/portfolio_5.jpg" alt="">
 							<div class="portfolio_item_content d-flex flex-column align-items-center justify-content-center">
-								<div class="portfolio_item_title">Brand Identity</div>
-								<div class="portfolio_item_link"><a href="#">See More</a></div>
+								<div class="portfolio_item_title">Kakashi Hatake</div>
 							</div>
 						</div>
+						<div class="modal fade top" id="modalCookie4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true" data-backdrop="true">
+							<div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+								<!--Content-->
+								<div class="modal-content">
+									<!--Body-->
+									<div class="modal-body">
+										<div class="row d-flex justify-content-center align-items-center">
+											<h3> Kakashi Hatake</h3>
+											<p class="pt-3 pr-2">
+												This is a drawing of Kakshi Hatake, a character of the manga Naruto,
+												<br>Who is Kakashi Hatake ?<br>
+													Kakashi Hatake (はたけカカシ, Hatake Kakashi) is a jonin from the hidden village of Konoha.
+													He is the leader of Team 7 composed of the three main characters of the manga: Naruto Uzumaki, Sakura Haruno and Sasuke Uchiwa.
+													He is known worldwide in the ninja world for his use of the Sharingan
+													(a pupil that normally only the Uchiwa family possesses and which allows to copy techniques and to throw powerful techniques of illusion) ,
+													under the nickname of "Ninja Copier".
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="grid-item portfolio_item p_design" data-toggle="modal" data-target="#modalCookie5">
+							<img src="images/portfolio_4.jpg" alt="">
+							<div class="portfolio_item_content d-flex flex-column align-items-center justify-content-center">
+								<div class="portfolio_item_title">Team fight Tactic helper </div>
+							</div>
+						</div>
+						<div class="modal fade top" id="modalCookie5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							 aria-hidden="true" data-backdrop="true">
+							<div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+								<!--Content-->
+								<div class="modal-content">
+									<!--Body-->
+									<div class="modal-body">
+										<div class="row d-flex justify-content-center align-items-center">
+											<h3> Team fight Tactic helper </h3>
+											<p class="pt-3 pr-2">
+												Team fight Tactic is a strategy game where you have to create a team with characters from the league of legend.
+												A game is played with 8 players and the goal is to be the last survivor by building the best team possible.
+												The project team fight tactic helper is under development and will allow to create team models on a website to try them in a real game.
+												Most of the data is provided by Riot Game, I'll just have to create an api and make it communicate with my website.
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 						
 				</div>
@@ -201,5 +334,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="plugins/Isotope/fitcolumns.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/portfolio.js"></script>
+<script type="text/javascript" src="./plugins/MDB-Free_4.13.0/js/mdb.min.js"></script>
 </body>
 </html>
