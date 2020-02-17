@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="style/style.css">
+    <link href="../plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../plugins/mCustomScrollbar/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="../styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="../styles/responsive.css">
+    <style type="text/css" media="print">
+        .noprint {
+            display: none
+        }
+        
+        .print {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header class="el-header noprint">
+            <div class="icon-btns">
+                <i class="icon-list" @click="changeLeftMenu"></i>
+                <i class="icon-skip_previous" v-bind:class="{'disabled': currentPage == 1}" @click="changeCurrentPage('first')"></i>
+                <i class="icon-play_arrow prev-icon" v-bind:class="{'disabled': currentPage == 1}" @click="changeCurrentPage('prev')"></i>
+                <i class="icon-play_arrow" v-bind:class="{'disabled': currentPage == pageNum}" @click="changeCurrentPage('next')"></i>
+                <i class="icon-skip_next" v-bind:class="{'disabled': currentPage == pageNum}" @click="changeCurrentPage('last')"></i>
+                <select v-model="currentPage">
+                    <option v-for="page in pageNum" v-bind:value="page">page {{ page }}</option>
+                </select>
+                <i class="icon-zoom_in" v-bind:class="{'disabled': zoomNum == 2}" @click="modifyZoom('in')"></i>
+                <select v-model="zoomNum">
+                    <option value="0.5">50%</option>
+                    <option value="0.6">60%</option>
+                    <option value="0.7">70%</option>
+                    <option value="0.8">80%</option>
+                    <option value="0.9">90%</option>
+                    <option value="1.0" selected>100%</option>
+                    <option value="1.1">110%</option>
+                    <option value="1.2">120%</option>
+                    <option value="1.3">130%</option>
+                    <option value="1.4">140%</option>
+                    <option value="1.5">150%</option>
+                    <option value="1.6">160%</option>
+                    <option value="1.7">170%</option>
+                    <option value="1.8">180%</option>
+                    <option value="1.9">190%</option>
+                    <option value="2.0">200%</option>
+                </select>
+                <i class="icon-zoom_out" v-bind:class="{'disabled': zoomNum == 0.5}" @click="modifyZoom('out')"></i>
+                <i class="icon-format_align_left" @click="textAlign = 'left'"></i>
+                <i class="icon-format_align_center" @click="textAlign = 'center'"></i>
+                <i class="icon-format_align_right" @click="textAlign = 'right'"></i>
+                <i class="icon-print" @click="window.print()"></i>
+            </div>
+        </header>
+
+        <aside class="noprint" width="240px" v-show="ifMenuShow">
+            <nav class="tabNav">
+                <ul>
+                    <li v-bind:class="{ 'curr': currentNav == 0 }" @click="currentNav = 0">Page</li>
+                </ul>
+
+                <div class="clear"></div>
+            </nav>
+
+            <div class="tab-conent scrollbar" v-bind:style="{ height: asideHeight + 'px' }">
+
+            <section v-show="currentNav == 0">
+                <ul class="page-menu">
+                    <li v-for="page in pageNum" v-bind:class="{ 'curr': currentPage == page }" @click="changePage(page)"><i class="icon-file-text2"></i> page {{ page }}</li>
+                </ul>
+            </section>
+
+            <section v-show="currentNav == 1">
+                <ul class="page-menu">
+                    <li v-for="page in pageNum" v-bind:class="{ 'curr': currentPage == page }" @click="changePage(page)"><i class="icon-turned_in_not"></i> Bookmark {{ page }}</li>
+                </ul>
+            </section>
+        </div>
+
+        </aside>
+        <div class="main scrollbar noprint"  v-bind:style="{ height: mainHeight + 'px' }" v-bind:class="{ 'mainLeftM': ifMenuShow, 'aleft': textAlign === 'left','acenter': textAlign === 'center','aright': textAlign === 'right'}">
+            <div class="conent" v-html="pageContent" v-bind:style="zoomStyle"></div>
+
+            <div class="clear"></div>
+        </div>
+
+        <!--专门只为打印的内容-->
+        <div class="conent print" style="display:none" v-html="pageContent"></div>
+    </div>
+</body>
+<!-- 先引入 Vue -->
+<script src="js/vue.min.js"></script>
+<script>
+
+var app = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                // visible: false,
+                isCollapse: false,
+                currentNav: 0,
+                activeName2: 'first',
+                pageNum: 1, 
+                currentPage: 1,
+                pageContent: '',
+                asideHeight: 300,
+                mainHeight: 300,
+                ifMenuShow: true,
+                zoomNum: '1.0',
+                textAlign: 'left',
+                zoomStyle: {},
+                pageDatas: ['<div style="position:absolute;top:0.000000px;left:0.000000px"><nobr><img height="1056.000000" width="270.000000" src ="bgimg/bg00001.jpg"/></nobr></div><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:-3.495931px;left:0.000000px"><nobr>  </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:-3.495931px;left:540.424011px"><nobr>  </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:13.000000px;font-style:normal;font-weight:normal;color:#E1E9EE;"><span style="position:absolute;top:53.812012px;left:28.800001px"><nobr>Coordonnées </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#FFFFFF;"><span style="position:absolute;top:83.341393px;left:28.800001px"><nobr><a href="mailto:simon.dalponte@gmail.com">simon.dalponte@gmail.com </a></nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:11.000000px;font-style:normal;font-weight:normal;color:#FFFFFF;"><span style="position:absolute;top:115.141357px;left:28.800001px"><nobr><a href="https://www.linkedin.com/in/simon-dalponte-04630b1a1?jobid=1234&lipi=urn%3Ali%3Apage%3Ad_jobs_easyapply_pdfgenresume%3BANuoKVaWTO%2BXN0feEIUxzg%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_jobs_easyapply_pdfgenresume-v02_profile" target="_blank">www.linkedin.com/in/simon- </a></nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:11.000000px;font-style:normal;font-weight:normal;color:#FFFFFF;"><span style="position:absolute;top:134.341385px;left:28.800001px"><nobr><a href="https://www.linkedin.com/in/simon-dalponte-04630b1a1?jobid=1234&lipi=urn%3Ali%3Apage%3Ad_jobs_easyapply_pdfgenresume%3BANuoKVaWTO%2BXN0feEIUxzg%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_jobs_easyapply_pdfgenresume-v02_profile" target="_blank">dalponte-04630b1a1 </a><span style="color:#A9B1B6;"><a href="https://www.linkedin.com/in/simon-dalponte-04630b1a1?jobid=1234&lipi=urn%3Ali%3Apage%3Ad_jobs_easyapply_pdfgenresume%3BANuoKVaWTO%2BXN0feEIUxzg%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_jobs_easyapply_pdfgenresume-v02_profile" target="_blank">(LinkedIn) </a></span></nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:13.000000px;font-style:normal;font-weight:normal;color:#E1E9EE;"><span style="position:absolute;top:178.478683px;left:28.800001px"><nobr>Principales compétences </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#FFFFFF;"><span style="position:absolute;top:208.008057px;left:28.800001px"><nobr>PHP </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#FFFFFF;"><span style="position:absolute;top:231.474777px;left:28.800001px"><nobr>Node.js </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#FFFFFF;"><span style="position:absolute;top:254.941406px;left:28.800001px"><nobr>SQL </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:26.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:50.025311px;left:298.079987px"><nobr>Simon Dalponte </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:98.370689px;left:298.079987px"><nobr>Étudiant(e) à IUT Nancy-Charlemagne </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#B1B1B1;"><span style="position:absolute;top:118.904053px;left:298.079987px"><nobr>Metz Area, France </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:15.750000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:163.677979px;left:298.079987px"><nobr>Résumé </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:203.037354px;left:298.079987px"><nobr>Actuellement étudiant en licence professionnelle CIAISE </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:227.037354px;left:298.079987px"><nobr>( Conception et Intégration d\'Applications et Service web Internes </nobr></span><span style="position:absolute;top:251.037354px;left:298.079987px"><nobr>pour les Entreprises ) à l\'IUT Nancy-Charlemangne.Je suis </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:275.037354px;left:298.079987px"><nobr>en recherche du stage et je souhaite après celui-ci devenir un </nobr></span><span style="position:absolute;top:299.037354px;left:298.079987px"><nobr>développeur web full stack. Je suis un développeur sérieux et </nobr></span><span style="position:absolute;top:323.037354px;left:298.079987px"><nobr>organisé, en effet peu importe le projet je me donne à fond en </nobr></span><span style="position:absolute;top:347.037354px;left:298.079987px"><nobr>suivant une méthode SCRUM avec l\'aide d\'un Trello ( outil de </nobr></span><span style="position:absolute;top:371.037354px;left:298.079987px"><nobr>gestion de projet en ligne ). Je suis une personne créative, je </nobr></span><span style="position:absolute;top:395.037354px;left:298.079987px"><nobr>dessine régulièrement que ce soit des dessins minimalistes, des </nobr></span><span style="position:absolute;top:419.037354px;left:298.079987px"><nobr>personnages de manga ou récemment des visages de femmes </nobr></span></span></p><div style="position:absolute;top:471.885315px;left:296.746674px"><nobr><img height="3.000000" width="52.000000" src ="bgimg/bg00002.jpg"/></nobr></div><p><span style="font-family:Arial Unicode MS;font-size:15.750000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:485.411346px;left:298.079987px"><nobr>Expérience </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:531.437378px;left:298.079987px"><nobr>IUT Nancy-Charlemagne </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:11.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:553.566650px;left:298.079987px"><nobr>Étudiant licence professionnelle CIASIE </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:574.360046px;left:298.079987px"><nobr>septembre 2019 - Present  </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#B1B1B1;"><span style="position:absolute;top:593.941345px;left:298.079987px"><nobr>Laxou, France </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:647.470703px;left:298.079987px"><nobr>TRINAPS </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:671.608032px;left:298.079987px"><nobr>5 mois </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:11.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:698.600037px;left:298.079987px"><nobr>Intervenant en événnementiel </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:719.393372px;left:298.079987px"><nobr>août 2019 - août 2019 (1 mois) </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#B1B1B1;"><span style="position:absolute;top:738.974731px;left:298.079987px"><nobr>France, Belfort </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:767.474731px;left:298.079987px"><nobr>Installation d\'un réseau internet (lien fibre optique et cuivre pour les usagers et </nobr></span><span style="position:absolute;top:791.474731px;left:298.079987px"><nobr>le staff) complet pour un festival (Eurockéennes) </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:11.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:831.966614px;left:298.079987px"><nobr>Étudiant stagiaire </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:852.760010px;left:298.079987px"><nobr>avril 2019 - juillet 2019 (4 mois) </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#B1B1B1;"><span style="position:absolute;top:872.341309px;left:298.079987px"><nobr>France, Belfort </nobr></span></span></p><div style="position:absolute;top:956.052002px;left:296.746674px"><nobr><img height="3.000000" width="52.000000" src ="bgimg/bg00003.jpg"/></nobr></div><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:900.841309px;left:298.079987px"><nobr>Numérisation d\'un processus papier pour l\'arrivé de nouveaux clients </nobr></span><span style="position:absolute;top:969.577881px;left:298.079987px"><nobr><span style="font-size:15.750000px;">Formation </span></nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:1023.703979px;left:0.000000px"><nobr>  </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:9.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:1024.577393px;left:511.978668px"><nobr>Page 1 of 2 </nobr></span></span></p>','<div style="position:absolute;top:0.000000px;left:0.000000px"><nobr><img height="1056.000000" width="270.000000" src ="bgimg/bg00004.jpg"/></nobr></div><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:-3.495931px;left:0.000000px"><nobr>  </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:-3.495931px;left:540.424011px"><nobr>  </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:56.504070px;left:298.079987px"><nobr>IUT Nancy-Charlemagne </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:82.141357px;left:298.079987px"><nobr>Licence professionnelle, Développement web · (2019 - 2020) </nobr></span><span style="position:absolute;top:124.504066px;left:298.079987px"><nobr><span style="font-size:12.000000px;">IUT de Belfort-Montbéliard - Université de Franche-Comté </span></nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:10.500000px;font-style:normal;font-weight:normal;color:#191919;"><span style="position:absolute;top:150.141357px;left:298.079987px"><nobr>DUT, Informatique · (2018 - 2019) </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:12.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:1023.703979px;left:0.000000px"><nobr>  </nobr></span></span></p><p><span style="font-family:Arial Unicode MS;font-size:9.000000px;font-style:normal;font-weight:normal;color:#000000;"><span style="position:absolute;top:1024.577393px;left:511.979980px"><nobr>Page 2 of 2 </nobr></span></span></p>']
+            }
+        },
+        mounted: function() {
+            this.$nextTick(function() {
+                this.pageNum = this.pageDatas.length;
+                this.pageContent = this.pageDatas[0];
+
+                this.setLeftMenuHeight();
+            })
+        },
+        watch: {
+            'currentPage': function(newVal, oldValue) {
+                // console.log('newVal ' + newVal, 'oldValue ' + oldValue);
+                if (newVal) {
+                    this.pageContent = this.pageDatas[this.currentPage - 1];
+                }
+            },
+            'zoomNum': function(newVal, oldValue) {
+                if (newVal) {
+                    this.zoomStyle = {
+                        'transform': 'scale(' + newVal + ')',
+                        '-webkit-transform': 'scale(' + newVal + ')',
+                        '-ms-transform': 'scale(' + newVal + ')',
+                        '-moz-transform': 'scale(' + newVal + ')',
+                        '-o-transform': 'scale(' + newVal + ')'
+                    }
+                }
+            }
+        },
+        methods: {
+            
+            changeCurrentPage: function(methods) {
+                switch (methods) {
+                    case 'first':
+                        this.currentPage = 1;
+                        break;
+                    case 'prev':
+                        if (this.currentPage > 1) {
+                            this.currentPage -= 1;
+                        }
+                        break;
+                    case 'next':
+                        if (this.currentPage < this.pageNum) {
+                            this.currentPage += 1;
+                        }
+                        break;
+                    case 'last':
+                        this.currentPage = this.pageNum;
+                        break;
+                }
+            },
+
+            gotoPage: function(page) {
+                console.log(page);
+                this.currentPage = page;
+            },
+            modifyZoom: function(type) {
+                switch (type) {
+                    case 'in':
+                        if (this.zoomNum < 2) {
+                            // this.zoomNum = (this.zoomNum + 0.1).toFixed(1);
+                            this.zoomNum = (parseFloat(this.zoomNum) + 0.1).toFixed(1);
+                        }
+                        break;
+                    case 'out':
+                        if (this.zoomNum > 0.5) {
+                            this.zoomNum = (parseFloat(this.zoomNum) - 0.1).toFixed(1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                console.log(this.zoomNum);
+            },
+            setLeftMenuHeight: function() {
+                // this.asideHeight = document.body.scrollHeight - 60;
+                this.mainHeight = document.documentElement.clientHeight - 60 - 20;
+                // 60为头部导航高度， 46为menu高度， 40为上下padding
+                this.asideHeight = this.mainHeight - 20 - 46;
+            },
+            changePage: function(page) {
+                this.currentPage = page;
+                // this.pageContent = this.pageDatas[page - 1];
+            },
+            changeLeftMenu: function() {
+                this.ifMenuShow = !this.ifMenuShow;
+            }
+        }
+    });
+
+function gotoPage(page) {
+    console.log(page);
+    app.gotoPage(page);
+}
+
+</script>
+
+</html>
